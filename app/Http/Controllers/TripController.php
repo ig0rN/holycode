@@ -128,6 +128,8 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
+        abort_if(!auth()->user()->isOwner($trip), 403);
+
         Storage::delete('public/' . $trip->file_name);
         
         $trip_title = $trip->title;
